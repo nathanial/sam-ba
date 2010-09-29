@@ -1,0 +1,332 @@
+Release Notes ¡V SAM-BA
+-----------------------
+Release version: 2.10
+Release date: 2010,July
+
+1 Overview
+-------------
+
+The SAM Boot Assistant (SAM-BA) software provides a means of easily programming different Atmel
+AT91SAM devices. They are based on a common dynamic linked library (DLL), the SAMBA_DLL.DLL.
+It is used by SAM-BA tool. SAM-BA now the DLL to communicate with the target. 
+
+AT91BOOT_DLL.DLL and SAM-PROG is not updated in this revision. SAM-PROG will remain available in 
+the at91isp v1.13. Customer who still wants SAM-PROG can download AT91-ISP v1.13.
+
+
+2 Downloading and Installing
+--------------------------------
+The software can be found and downloaded from ATMEL's website at 
+http://www.atmel.com/dyn/products/tools_card_v2.asp?tool_id=3883
+  
+   - sam-ba_2.10.exe (current release) for Windows
+     Install files for the SAM-BA package. 
+     Execute sam-ba_2.10.exe to install. If a XP platform is detected, both optimized atm6124 and CDC solutions are installed 
+     otherwise, only the CDC version is automatically installed.
+
+   - sam-ba_2.10.zip (current release) for Linux
+     Install files for the SAM-BA package only. Uses standard CDC driver
+     Unzip the package zip file under a local folder on your PC.
+
+
+3 New Features
+-----------------
+   - New JTAG connection support for sam3 device.
+     - JTAG communication is done directly using JLINKARM.DLL function instead of using DCC 
+       (Debug Communication Channel) mode in previous version.
+
+   - New devices support
+   - AT91SAM3N4 AT91SAM3N2 AT91SAM3N1 support
+   - AT91SAM3U2 AT91SAM3U1 support
+   - AT91SAM3S4 AT91SAM3S2 AT91SAM3S1 support
+   - AT91SAM7S16 AT91SAM7S161 support
+
+
+4 Contents
+--------------
+
+   - SAMBA_DLL.DLL V1.00 (A dynamic linked library connects AT91SAM-based targets through a USB, JTAG or COM port).
+   
+   - Segger JLINKARM.DLL V4.14 (DLL for using J-Link / J-Trace with third-party programs JTAG driver)
+   
+   - TCL Toolchain including tclsh can be downloaded from the following URL:
+     http://www.activestate.com/Products/ActiveTcl/
+   
+   - Documents
+     - SAM-BA User Guide.pdf
+     - AppletUsage.txt
+     - CustomApplet.txt
+     - Releasenote.txt
+     - Samba_CDC.txt
+   
+   - SAMBA 2.10 supports the following AT91SAM based microcontrollers:
+     - at91sam3s4 at91sam3s2 at91sam3s1
+     - at91sam3u4 at91sam3u2 at91sam3u1
+     - at91sam3n4 at91sam3n2 at91sam3n1
+     - at91sam7a3
+     - at91sam7l64 at91sam7l128     
+     - at91sam7s16 at91sam7s161 at91sam7s321 at91sam7s32 at91sam7s64 at91sam7s128 at91sam7s256 at91sam7s512     
+     - at91sam7se32 at91sam7se256 at91sam7se512    
+     - at91sam7x128 at91sam7x256 at91sam7x512     
+     - at91sam7xc128 at91sam7xc256 at91sam7xc512    
+     - at91sam9260 
+     - at91sam9261      
+     - at91sam9263      
+     - at91sam9g10 (Add new revision of sam9g10 chip id)
+     - at91sam9g20      
+     - at91sam9g45      
+     - at91sam9m10      
+     - at91sam9rl64     
+     - at91sam9xe128    
+     - at91sam9xe128    
+     - at91sam9xe256    
+     - at91sam9xe512    
+     - at91cap7         
+     - at91cap9         
+   
+
+5 Improvements
+------------------
+
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - Add support to verify if an active sam-ba task is running before launching sam-ba, ask to kill it.
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - When SAM-BA starts, it could not differentiate a real invalid ID from a communication error with the chip.
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - Sam-ba could not detect real board, if user select a wrong board name from drop list.
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - A new eeprom devices auto detection algorithm.
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - Add function to erase blocks for NAND flash applet (command line only)
+   syntax:  
+            NANDFLASH::EraseBlocks {start end} 
+                       start: start address of block to erase in hex.
+                       end : end address of block to erase in hex.
+            
+   Example: 
+            NANDFLASH::EraseBlocks 0x40000 0x90000
+   ----------------------------------------------------------------------------------------------------------------------------------    
+   - Add "Send Boot File" for SAM9G10/G20/G45/M10 chips.
+   ----------------------------------------------------------------------------------------------------------------------------------    
+   - Add new at25 device AT25DF512B-SSH-B,AT25DF021-SSH-B,AT25DF021-MH-T,AT25DF161-SSH-B,AT25DF161-SH-B,AT25DF641-S3H-B.
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - Add Dataflash (SPI0 CS3) support for SAM9261-EK.
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - Add Dataflash (SPI0 CS3) support for SAM9G10-EK.
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - Improved erase all algorithm for nandflash applet. 
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - Connect/disconnect functionality support.
+   ----------------------------------------------------------------------------------------------------------------------------------    
+   - Add lowlevel init in flash applet for sam7 chip.
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - Improved dataflash programming algorithm.
+
+
+6 Bug Fix
+-------------
+
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - Fixed Jtag issue when the chip has booted on a program from an external memory (Nand, DF ...) and if that program has initialized the PLL and MCK. 
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - Fixed Jtag issue if customers not running the chips with the same XTAL or external oscillator as on our EK boards.
+   ----------------------------------------------------------------------------------------------------------------------------------    
+   - Fixed flash init problem on AT91SAM7S32/321.
+   ----------------------------------------------------------------------------------------------------------------------------------    
+   - Fixed DataFlash init problem on AT91SAM7A3.
+   ----------------------------------------------------------------------------------------------------------------------------------    
+   - Fixed dataFlash programming of large files fails (~>1Mbytes) on AT91SAM9G20 with COM port connection.
+   ----------------------------------------------------------------------------------------------------------------------------------    
+   - Fixed flash applet initialization in CDC mode on SAM7.
+   ----------------------------------------------------------------------------------------------------------------------------------    
+   - Fixed SAM7X/XC access cdc linux , Flash init fail with error message.
+   ----------------------------------------------------------------------------------------------------------------------------------    
+   - Fixed spell error "appletMAilboxAddr" at91sam7s128-ek.tcl.
+   ----------------------------------------------------------------------------------------------------------------------------------    
+   - Fixed security bit script for at91sam3u4-ek.tcl.
+   ----------------------------------------------------------------------------------------------------------------------------------    
+   - Fixed Usb/com timeout problem on some 8-Bit Nand flash.
+   ----------------------------------------------------------------------------------------------------------------------------------    
+   - Fixed  Nand flash program algorithm for SAM9M10/9G45.
+   ----------------------------------------------------------------------------------------------------------------------------------    
+   - When using the JTAG it is not possible to program the 2nd flash bank of the SAM7X512 device.
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - No Support for 8-bit Nand Small Blocks. The algorithm is not correctly implemented for such nandflash devices.
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - An incorrect EEPROM::appletAddr in TCL definitions address to SDRAM could lead to crash for some at91sam9 boards.
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - Latest large nandflash devices have bigger page size (4K for instance) and SAMBA and the SW library does not support it. This 
+   may be due to the new spare zone organization.
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - An incorrect 'Enable Security Bit' descriptor for SAM3U.
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - NOR flash not able to 'erese all' on sam9m10-g45-ek REV.A board
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - It is not possible to connect to SAMBA with a SAM9260-EK using the RS232 port.
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - Fixed eeprom program algorithm for SAM9260-EK.
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - Flash applet in command mode could not unlock region before write.
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - Fixed connection on SAM3S-EK with COM port.
+   ----------------------------------------------------------------------------------------------------------------------------------
+   - CDC version hang during flash init of SAM7 chips.
+   ----------------------------------------------------------------------------------------------------------------------------------
+
+
+7 Validation
+-----------------
+
+This release was built and validated against using the following components: 
+    - Automated scripts which load different file size at different memory locations
+    - Corner cases scripts done to check a particular points in the algorithms
+    - Validation sequence description for all tests which can not be scripted
+    - All demo programming scripts is tested on the different boards
+
+This release was installed and tested on following platforms:
+    - samba Windows version was tested on  Windows XP and samba cdc was tested Vista, win7 (32bit and 64bit)  
+    - samba Linux version has been tested on Fedra Linux(fc8)
+
+8 History 
+----------------
+
+----------------------------------------------------------------------------------------------------------------------------------
+v2.9:
+    - Added support for AT91SAM9M10, AT91SAM9G45, AT91SAM9G10, AT91SAM7SL.
+    - Added support for AT91SAM3U, with USB and COM port connection only (no SAM-ICE).
+    - Fixed Dataflash access on AT91SAM9G20 CU-A.
+    - Select 16/32 bits external SDRAM in board TCL file without applet compilation.
+    - External memory initialization failure at SAM-BA startup is indicated by a popup
+       window, but user can choose to use SAM-BA anyway.
+    - Added a listbox to choose applet debug traces level easily. Traces are sent to DBGU
+       port when using USB or JTAG connection link.
+    - Added Nandflash bad block listing script.
+    - Added a document to help user to customize SAM-BA and applets for a custom board.
+
+----------------------------------------------------------------------------------------------------------------------------------
+v2.8:
+    - Added support for DataFlash in Binary mode (Power of 2 page size),
+    - Improved programing speed with applets running at higher CPU and MCK clock frequency,
+    - Fixed AT91SAM7L64/128 support,
+    - Fixed AT91SAM7XC support.
+
+----------------------------------------------------------------------------------------------------------------------------------
+v2.7:
+    - New flash programming applets :
+        - NandFlash, DataFlash, SerialFlash, NorFlash,
+        - GCC code,
+        - based on at91lib software library. 
+    - Added support for AT91SAM7L64/128, AT91SAM9G20, AT91SAM9XE,
+        and AT91CAP9 (EK and STK).
+    - Fixed AT91SAM9RL64 support.
+
+----------------------------------------------------------------------------------------------------------------------------------
+v2.6:
+    - Fixed AT91SAM9263 DataFlash script bug.
+    - Fixed AT91SAM7S512/SE512/X512 Flash programming bug.
+    - Fixed AT91SAM7SE/X/XC GPNVM accesses with JTAG.
+    - Added support for AT91SAM9RL64 and AT91CAP9.
+    - More NandFlash supported :
+    	* Micron, Samsung, Toshiba, Fujitsu, National, and STMicro
+    	* 1Gbit to 16Gbits, 8 and 16 bits bus size.
+    - Improved NandFlash bad block management (Skip block method).
+    - JTAG support for AT91SAM926x.
+
+----------------------------------------------------------------------------------------------------------------------------------
+v2.5:
+    - Bypass of Connection Message Box when launching SAM-BA with port
+       and board name in command line parameter.
+    - Support for AT91SAM9XE family.
+    - Various bug fixes : script mode feature improved (no more message boxes),
+       open and save file dialog boxes displays now correctly.
+
+----------------------------------------------------------------------------------------------------------------------------------
+v2.4:
+    - J-Link support improved for AT91SAM7A3
+    - AT91SAM9263 NandFlash block programming support
+    - Added SDRAM config for 48, 100 and 133 MHz MCK on SAM926x boards
+    - Minor GUI bug fixes
+
+----------------------------------------------------------------------------------------------------------------------------------
+v2.3:
+    o Supports:
+    - SAM7S32/321/64/128/256/512
+    - SAM7X(C)128/256/512
+    - SAM7SE32/256/512
+    - SAM9260/9261/9263
+    o Only by adding/modifying TCL scripts in the lib directory, it is now
+      possible to add:
+    - Your own boards
+    - Your own memory algorithms
+----------------------------------------------------------------------------------------------------------------------------------
+
+
+9 Contact Information
+---------------------
+For support on the AT91 Software Package please send request to at91@atmel.com
+
+---------------------
+10 Copyright (c) 2010, Atmel Corporation All rights reserved.
+
+ * ----------------------------------------------------------------------------
+ *         ATMEL Microcontroller Software Support
+ * ----------------------------------------------------------------------------
+ * Copyright (c) 2010, Atmel Corporation
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * - Redistributions of source code must retain the above copyright notice,
+ * this list of conditions and the disclaimer below.
+ *
+ * Atmel's name may not be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ *
+ * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+ * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * ----------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
