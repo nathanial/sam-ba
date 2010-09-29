@@ -49,7 +49,7 @@ ifeq ($(CHIP),at91cap7)
 BOARD_DIR = $(BOARD)
 endif
 
-INSTALLDIR = "../tcl_lib/$(BOARD_DIR)/"
+INSTALLDIR = "../../../tcl_lib/$(BOARD_DIR)/"
 
 # AT91 library directory
 AT91LIB = ../../at91lib
@@ -203,7 +203,7 @@ ifeq (cortexm3,$(CHIP_CORE))
     C_OBJECTS += exceptions.o
     C_OBJECTS += nvic.o
 else
-	# Objects built from Assembly source files
+# Objects built from Assembly source files
 	ASM_OBJECTS = isp_cstartup.o
     C_OBJECTS += aic.o
 endif
@@ -229,7 +229,7 @@ $(1): $$(ASM_OBJECTS_$(1)) $$(C_OBJECTS_$(1))
 	$(OBJCOPY) -O binary $(OUTPUT).elf $(OUTPUT).bin
 	$(SIZE) $$^ $(OUTPUT).elf
 	@[ -e $(INSTALLDIR) ] || mkdir $(INSTALLDIR)
-	@cp -f $(OUTPUT).bin $(INSTALLDIR)
+	@cp -vf $(OUTPUT).bin $(INSTALLDIR)
 
 $$(C_OBJECTS_$(1)): $(OBJ)/$(1)_%.o: %.c Makefile $(OBJ) $(BIN)
 	$(CC) $(CFLAGS) -D$(1) -c -o $$@ $$<

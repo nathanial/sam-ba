@@ -79,7 +79,8 @@ init:
     
 /* Update the is_initialized flag */    
     mov     r1, #1
-    str     r1, [pc, #-(8+.-isInitialized)]
+    mov     r2, pc 
+    str     r1, [r2, #-(8+.-isInitialized)]
 2:
 
 /* Branch to main()
